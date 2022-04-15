@@ -11,13 +11,32 @@
 /* LAYOUT
 /*******************************************/
 body{
-  	background: black;
-  	color: white;
+  	color: grey;
+	background-color: black;
 }
-section{
-  	display: block;
-  	float: left;
+table{
+	table-layout: fixed;
+	width: 40%;
 }
+thead{
+	color: black;
+	width: 10%;
+	background-color: #a1a1a1;
+}
+td{
+	width: 10%;
+	padding-top: 3%;
+	padding-left: 13%;
+}
+tbody tr:nth-child(odd){
+	color: black;
+	background-color: #b8b8b8;
+}
+tbody tr:nth-child(even) {
+	color: black;
+	background-color: #e3e3e3;
+  }
+  
 
 /******************************************
 /* ADDITIONAL STYLES

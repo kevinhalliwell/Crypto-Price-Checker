@@ -11,11 +11,37 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<section>
+		<table id="crypto">
+			<thead>
+				<tr>
+					<th scope="col">Asset</th>
+					<th scope="col">Price</th>
+					<th scope="col">% Change</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="bitcoin">
+					<td id="btc"></td>
+					<td id="btcPrice"></td>
+					<td id="btcPercent"></td>
+				</tr>
+				<tr id="ethereum">
+					<td id="eth"></td>
+					<td id="ethPrice"></td>
+					<td id="ethPercent"></td>
+				</tr>
+				<tr id="shiba">
+					<td id="shib"></td>
+					<td id="shibPrice"></td>
+					<td id="shibPercent"></td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- <section>
 			<h3>Bitcoin</h3>
 			<h4 id="btc"></h4>
 			<h4 id="btcChange"></h4>
-		</section>
+		</section> -->
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
 </html>
