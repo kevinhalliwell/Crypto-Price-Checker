@@ -5,14 +5,14 @@ function getFetch(){
       	.then(res => res.json())
       	.then(data => {
       	console.log(data)
-		document.querySelector('#btc').innerText = data.data.priceUsd
-		let percent = data.data.changePercent24Hr
+		document.querySelector('#btc').innerText = Number(data.data.priceUsd).toFixed(2)
+		let percent = Number(data.data.changePercent24Hr)
 		if (percent >= 0){
 			document.getElementById("btcChange").style.color = "Green"
-			document.querySelector('#btcChange').innerText = percent
+			document.querySelector('#btcChange').innerText = percent.toFixed(2)
 		} else {
 			document.getElementById("btcChange").style.color = "Red"
-			document.querySelector('#btcChange').innerText = percent
+			document.querySelector('#btcChange').innerText = percent.toFixed(2)
 		}
       	})
     .catch(err => {

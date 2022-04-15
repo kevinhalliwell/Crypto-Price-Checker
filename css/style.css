@@ -4,17 +4,20 @@
 
 /* Box Model Hack */
 *{
-  box-sizing: border-box;
+  	box-sizing: border-box;
 }
 
 /******************************************
 /* LAYOUT
 /*******************************************/
 body{
-  background: black;
-  color: white;
+  	background: black;
+  	color: white;
 }
-
+section{
+  	display: block;
+  	float: left;
+}
 
 /******************************************
 /* ADDITIONAL STYLES
