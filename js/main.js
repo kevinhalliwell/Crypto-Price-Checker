@@ -3,7 +3,7 @@
 function getFetch(){
   	//const choice = document.querySelector('input').value
   	//console.log(choice)
-  	const url = `api.coincap.io/v2/assets`
+  	const url = `api.coincap.io/v2/assets/bitcoin`
 
   	fetch(url)
       	.then(res => res.json()) // parse response as JSON
