@@ -1,12 +1,12 @@
 //Coincode api used to get crypto prices
+var requestOptions = {
+	method: 'GET',
+	redirect: 'follow'
+};
 
 function getFetch(){
-  	//const choice = document.querySelector('input').value
-  	//console.log(choice)
-  	const url = `api.coincap.io/v2/assets/bitcoin`
-
-  	fetch(url)
-      	.then(res => res.json()) // parse response as JSON
+  	fetch("api.coincap.io/v2/assets", requestOptions)
+      	.then(res => res.text())
       	.then(data => {
       	console.log(data)
       	})
