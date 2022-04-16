@@ -23,11 +23,19 @@ function coinDataComplete(coinPrice, coinPercent, coinTest, coinHigh, coinLow, c
 	} else {
 		document.getElementById(coinPercent).style.backgroundColor = "Red"
 	}
-	document.querySelector('#' + coinPrice).innerText = "$" + Number(coinTest.last).toFixed(4)
+	// need to add if statement to add zeros for currency like shiba
+	document.querySelector('#' + coinPrice).innerText = "$" + Number(coinTest.last).toFixed(2)
+
 	document.querySelector('#' + coinPercent).innerText = p + "%"
-	document.querySelector('#' + coinHigh).innerText = "$" + Number(coinTest.high24hr).toFixed(4)
-	document.querySelector('#' + coinLow).innerText = "$" + Number(coinTest.low24hr).toFixed(4)
-	document.querySelector('#' + coinVolume).innerText = Number(coinTest.baseVolume).toFixed(4)
+
+	// need to add if statement to add zeros for currency like shiba
+	document.querySelector('#' + coinHigh).innerText = "$" + Number(coinTest.high24hr).toFixed(2)
+
+	// need to add if statement to add zeros for currency like shiba
+	document.querySelector('#' + coinLow).innerText = "$" + Number(coinTest.low24hr).toFixed(2)
+	
+	// need to add statement to add k or m to currency
+	document.querySelector('#' + coinVolume).innerText = Number(coinTest.baseVolume).toFixed(2)
 }
 
 // gets coin name and symbol
