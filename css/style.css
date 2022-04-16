@@ -13,20 +13,20 @@
 body{
   	color: grey;
 	background-color: black;
+	font-family: 'Roboto', sans-serif;
 }
 table{
-	table-layout: fixed;
-	width: 40%;
+	width: 100%;
+	text-align: center; 
+    vertical-align: middle;
 }
 thead{
 	color: black;
-	width: 10%;
 	background-color: #a1a1a1;
 }
 td{
-	width: 10%;
-	padding-top: 3%;
-	padding-left: 13%;
+	height: 50px;
+	width: 100px;
 }
 tbody tr:nth-child(odd){
 	color: black;

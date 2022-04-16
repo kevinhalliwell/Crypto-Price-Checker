@@ -1,77 +1,65 @@
 //Coincode api used to get crypto prices
 
-function getFetchBTC(){
-  	fetch("https://api.coincap.io/v2/assets/bitcoin")
-      	.then(res => res.json())
-      	.then(data => {
-      	console.log(data)
-		let percent = Number(data.data.changePercent24Hr).toFixed(2)
-		if (percent >= 0){
-			document.getElementById('btcPercent').style.color = "Green"
-		} else {
-			document.getElementById('btcPercent').style.color = "Red"
-		}
-		document.querySelector('#btc').innerText = data.data.name
-		document.querySelector('#btcPrice').innerText = "$" + Number(data.data.priceUsd).toFixed(3)
-		document.querySelector('#btcPercent').innerText = percent + "%"
-      	})
-    .catch(err => {
-        console.log(`error ${err}`)
-    });
+let coin = ""
+let coinPrice = ""
+let coinPercent = ""
+let num = 0
+
+function coinData(d, coin, coinPrice, coinPercent, num){
+	let p = Number(d.data[num].changePercent24Hr).toFixed(2)
+	if (p >= 0){
+		document.getElementById(coinPercent).style.backgroundColor = "Green"
+	} else {
+		document.getElementById(coinPercent).style.backgroundColor = "Red"
+	}
+	document.querySelector('#' + coin).innerText = d.data[num].name
+	document.querySelector('#' + coinPrice).innerText = "$" + Number(d.data[num].priceUsd).toFixed(2)
+	document.querySelector('#' + coinPercent).innerText = p + "%"
 }
 
-function getFetchETH(){
-	fetch("https://api.coincap.io/v2/assets/ethereum")
+
+function getFetch(){
+	fetch("https://api.coincap.io/v2/assets")
 		.then(res => res.json())
 		.then(data => {
-		console.log(data)
-	  let percent = Number(data.data.changePercent24Hr).toFixed(2)
-	  if (percent >= 0){
-		  document.getElementById('ethPercent').style.color = "Green"
-	  } else {
-		  document.getElementById('ethPercent').style.color = "Red"
-	  }
-	  document.querySelector('#eth').innerText = data.data.name
-	  document.querySelector('#ethPrice').innerText = "$" + Number(data.data.priceUsd).toFixed(3)
-	  document.querySelector('#ethPercent').innerText = percent + "%"
+			console.log(data)
+
+			//Bitcoin data
+			coin = "btc"
+			coinPrice = "btcPrice"
+			coinPercent = "btcPercent"
+			num = 0
+			coinData(data, coin, coinPrice, coinPercent, num)
+
+			//Ethereum data
+			coin = "eth"
+			coinPrice = "ethPrice"
+			coinPercent = "ethPercent"
+			num = 1
+			coinData(data, coin, coinPrice, coinPercent, num)
+
+			//Shiba-Inu data
+			coin = "shib"
+			coinPrice = "shibPrice"
+			coinPercent = "shibPercent"
+			num = 14
+			coinData(data, coin, coinPrice, coinPercent, num)
 		})
-  .catch(err => {
-	  console.log(`error ${err}`)
-  });
+  	.catch(err => {
+	  	console.log(`error ${err}`)
+  	});
 }
 
-function getFetchSHIBA(){
-	fetch("https://api.coincap.io/v2/assets/shiba-inu")
+function getFetchCandles(){
+	fetch("https://api.coincap.io/v2/candles?exchange=kraken&interval=m1&baseId=usd&quoteId=bitcoin")
 		.then(res => res.json())
 		.then(data => {
-		console.log(data)
-	  let percent = Number(data.data.changePercent24Hr).toFixed(2)
-	  if (percent >= 0){
-		  document.getElementById('shibPercent').style.color = "Green"
-	  } else {
-		  document.getElementById('shibPercent').style.color = "Red"
-	  }
-	  document.querySelector('#shib').innerText = data.data.name
-	  document.querySelector('#shibPrice').innerText = "$" + Number(data.data.priceUsd).toFixed(8)
-	  document.querySelector('#shibPercent').innerText = percent + "%"
+			console.log(data)
 		})
-  .catch(err => {
-	  console.log(`error ${err}`)
-  });
+  	.catch(err => {
+	  	console.log(`error ${err}`)
+  	});
 }
 
-function getFetchBTCHistory(){
-	fetch("https://api.coincap.io/v2/candles?exchange=poloniex&interval=d1&baseId=ethereum&quoteId=bitcoin")
-		.then(res => res.json())
-		.then(data => {
-		console.log(data)
-		})
-  .catch(err => {
-	  console.log(`error ${err}`)
-  });
-}
-
-getFetchBTC()
-getFetchETH()
-getFetchSHIBA()
-getFetchBTCHistory()
+getFetch()
+getFetchCandles()
