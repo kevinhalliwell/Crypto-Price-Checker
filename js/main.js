@@ -64,9 +64,9 @@ function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, c
 
 	// checks to see if currency needs more places beyond decimal
 	if (!shibaTrue) {
-		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.high24hr).toFixed(2)
+		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.low24hr).toFixed(2)
 	} else {
-		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.high24hr).toFixed(7)
+		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.low24hr).toFixed(7)
 	}
 	
 	//************************************
@@ -138,7 +138,7 @@ function getFetch(){
 
 //Get complete coin data
 function getFetchCoinData(){
-	fetch("https://poloniex.com/public?command=returnTicke")
+	fetch("https://poloniex.com/public?command=returnTicker")
 		.then(res => res.json())
 		.then(data => {
 			//console.log(data)
