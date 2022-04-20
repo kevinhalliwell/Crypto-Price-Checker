@@ -14,6 +14,22 @@ let table = "crypto" // string for table. used to delete column
 let shibaTrue = true // boolean to adjust number of zeros
 let dogeTrue = true // boolean to adjust number of zeros
 
+// function to loop through array and pull data for coins
+function coinArray(data, coin){
+	let num = 0
+	for (let i = 0; i < data.data.length; i++){
+		//console.log(i)
+		if (data.data[i].symbol === coin.toUpperCase()){
+			num = i
+			i = data.data.length + 1
+			//console.log(i)
+			//console.log(num)
+			return num
+		}
+		//console.log(num)
+	}
+}
+
 // delete table column if api fails to connect
 function deleteColumn(table, column){
 	var table = document.getElementById(table),
@@ -121,36 +137,33 @@ function getFetch(){
 		.then(data => {
 			console.log(data)
 
-			// need to add a way to loop over the array to pull the info we want.
-			// cosmos keeps changing. any of these can change
-
 			// Bitcoin data
 			coin = "btc"
-			num = 0
+			num = coinArray(data, coin)
 			symbol = "btcSymbol"
 			coinData(data, coin, num, symbol)
 
 			// Ethereum data
 			coin = "eth"
-			num = 1
+			num = coinArray(data, coin)
 			symbol = "ethSymbol"
 			coinData(data, coin, num, symbol)
 
 			// Shiba-Inu data
 			coin = "shib"
-			num = 14
+			num = coinArray(data, coin)
 			symbol = "shibSymbol"
 			coinData(data, coin, num, symbol)
 
 			// Atom data
 			coin = "atom"
-			num = 26
+			num = coinArray(data, coin)
 			symbol = "atomSymbol"
 			coinData(data, coin, num, symbol)
 
 			// Doge data
 			coin = "doge"
-			num = 11
+			num = coinArray(data, coin)
 			symbol = "dogeSymbol"
 			coinData(data, coin, num, symbol)
 			
@@ -165,7 +178,7 @@ function getFetchCoinData(){
 	fetch("https://poloniex.com/public?command=returnTicker")
 		.then(res => res.json())
 		.then(data => {
-			console.log(data)
+			// console.log(data)
 
 			// Bitcoin data
 			coinPrice = "btcPrice"
@@ -233,7 +246,7 @@ function getFetchBackup(){
 
 			// Bitcoin data
 			coin = "btc"
-			num = 0
+			num = coinArray(data, coin)
 			symbol = "btcSymbol"
 			coinPrice = "btcPrice"
 			coinPercent = "btcPercent"
@@ -243,7 +256,7 @@ function getFetchBackup(){
 
 			// Ethereum data
 			coin = "eth"
-			num = 1
+			num = coinArray(data, coin)
 			symbol = "ethSymbol"
 			coinPrice = "ethPrice"
 			coinPercent = "ethPercent"
@@ -253,7 +266,7 @@ function getFetchBackup(){
 
 			// Shiba-Inu data
 			coin = "shib"
-			num = 14
+			num = coinArray(data, coin)
 			symbol = "shibSymbol"
 			coinPrice = "shibPrice"
 			coinPercent = "shibPercent"
@@ -263,11 +276,21 @@ function getFetchBackup(){
 
 			// Atom data
 			coin = "atom"
-			num = 26
+			num = coinArray(data, coin)
 			symbol = "atomSymbol"
 			coinPrice = "atomPrice"
 			coinPercent = "atomPercent"
 			coinVolume = "atomVolume"
+			shibaTrue = false
+			coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue)
+
+			// Doge data
+			coin = "doge"
+			num = coinArray(data, coin)
+			symbol = "dogeSymbol"
+			coinPrice = "dogePrice"
+			coinPercent = "dogePercent"
+			coinVolume = "dogeVolume"
 			shibaTrue = false
 			coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue)
 
