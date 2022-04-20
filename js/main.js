@@ -1,9 +1,9 @@
-//Coincode api used to get crypto prices
+// Coincode api used to get crypto prices
 
-let coin = "" //string for coin cell
-let coinPrice = "" //string for price cell
-let coinPercent = "" //string for percent cell
-let num = 0 //id in the array
+let coin = "" // string for coin cell
+let coinPrice = "" // string for price cell
+let coinPercent = "" // string for percent cell
+let num = 0 // id in the array
 let symbol = "" // string for symbol cell
 let coinHigh = "" // string for 24 hr high
 let coinLow = "" // string for 24 hr high
@@ -112,22 +112,28 @@ function getFetch(){
 		.then(data => {
 			console.log(data)
 
-			//Bitcoin data
+			// Bitcoin data
 			coin = "btc"
 			num = 0
 			symbol = "btcSymbol"
 			coinData(data, coin, num, symbol)
 
-			//Ethereum data
+			// Ethereum data
 			coin = "eth"
 			num = 1
 			symbol = "ethSymbol"
 			coinData(data, coin, num, symbol)
 
-			//Shiba-Inu data
+			// Shiba-Inu data
 			coin = "shib"
 			num = 14
 			symbol = "shibSymbol"
+			coinData(data, coin, num, symbol)
+
+			// Atom data
+			coin = "atom"
+			num = 25
+			symbol = "atomSymbol"
 			coinData(data, coin, num, symbol)
 			
 		})
@@ -136,40 +142,51 @@ function getFetch(){
   	});
 }
 
-//Get complete coin data
+// Get complete coin data
 function getFetchCoinData(){
 	fetch("https://poloniex.com/public?command=returnTicker")
 		.then(res => res.json())
 		.then(data => {
-			//console.log(data)
-				//Bitcoin data
-				coinPrice = "btcPrice"
-				coinPercent = "btcPercent"
-				coinHigh = "btcHigh"
-				coinLow = "btcLow"
-				coinVolume = "btcVolume"
-				shibaTrue = false
-				coinDataComplete(coinPrice, coinPercent, data.USDT_BTC, coinHigh, coinLow, coinVolume, shibaTrue)
+			console.log(data)
 
-				//Ethereum data
-				coinPrice = "ethPrice"
-				coinPercent = "ethPercent"
-				coinHigh = "ethHigh"
-				coinLow = "ethLow"
-				coinVolume = "ethVolume"
-				shibaTrue = false
-				coinDataComplete(coinPrice, coinPercent, data.USDT_ETH, coinHigh, coinLow, coinVolume, shibaTrue)
+			// Bitcoin data
+			coinPrice = "btcPrice"
+			coinPercent = "btcPercent"
+			coinHigh = "btcHigh"
+			coinLow = "btcLow"
+			coinVolume = "btcVolume"
+			shibaTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_BTC, coinHigh, coinLow, coinVolume,shibaTrue)
 
-				//Shiba-Inu data
-				coinPrice = "shibPrice"
-				coinPercent = "shibPercent"
-				coinHigh = "shibHigh"
-				coinLow = "shibLow"
-				coinVolume = "shibVolume"
-				shibaTrue = true
-				coinDataComplete(coinPrice, coinPercent, data.USDT_SHIB, coinHigh, coinLow, coinVolume, shibaTrue)
+			// Ethereum data
+			coinPrice = "ethPrice"
+			coinPercent = "ethPercent"
+			coinHigh = "ethHigh"
+			coinLow = "ethLow"
+			coinVolume = "ethVolume"
+			shibaTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_ETH, coinHigh, coinLow, coinVolume,shibaTrue)
+
+			// Shiba-Inu data
+			coinPrice = "shibPrice"
+			coinPercent = "shibPercent"
+			coinHigh = "shibHigh"
+			coinLow = "shibLow"
+			coinVolume = "shibVolume"
+			shibaTrue = true
+			coinDataComplete(coinPrice, coinPercent, data.USDT_SHIB, coinHigh, coinLow, coinVolume,shibaTrue)
+
+			// Atom data
+			coinPrice = "atomPrice"
+			coinPercent = "atomPercent"
+			coinHigh = "atomHigh"
+			coinLow = "atomLow"
+			coinVolume = "atomVolume"
+			shibaTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_ATOM, coinHigh, coinLow, coinVolume,shibaTrue)
 		})
-  	.catch(err => {
+  	
+		.catch(err => {
 	  	console.log(`error ${err}`)
 		// call the backup helper if the api fails
 		getFetchBackup()
@@ -181,9 +198,8 @@ function getFetchBackup(){
 	fetch("https://api.coincap.io/v2/assets")
 		.then(res => res.json())
 		.then(data => {
-			//console.log(data)
 
-			//Bitcoin data
+			// Bitcoin data
 			coin = "btc"
 			num = 0
 			symbol = "btcSymbol"
@@ -193,7 +209,7 @@ function getFetchBackup(){
 			shibaTrue =  false
 			coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue)
 
-			// //Ethereum data
+			// Ethereum data
 			coin = "eth"
 			num = 1
 			symbol = "ethSymbol"
@@ -203,7 +219,7 @@ function getFetchBackup(){
 			shibaTrue = false
 			coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue)
 
-			// //Shiba-Inu data
+			// Shiba-Inu data
 			coin = "shib"
 			num = 14
 			symbol = "shibSymbol"
@@ -211,6 +227,16 @@ function getFetchBackup(){
 			coinPercent = "shibPercent"
 			coinVolume = "shibVolume"
 			shibaTrue = true
+			coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue)
+
+			// Atom data
+			coin = "atom"
+			num = 25
+			symbol = "atomSymbol"
+			coinPrice = "atomPrice"
+			coinPercent = "atomPercent"
+			coinVolume = "atomVolume"
+			shibaTrue = false
 			coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue)
 
 		})
