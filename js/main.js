@@ -29,9 +29,9 @@ function deleteColumn(table, column){
 }
 
 // helper function to get name and symbol
-function coinData(d, coin, num, symbol){
-	document.querySelector('#' + coin).innerText = d.data[num].name
-	document.querySelector('#' + symbol).innerText = d.data[num].symbol
+function coinData(data, coin, num, symbol){
+	document.querySelector('#' + coin).innerText = data.data[num].name
+	document.querySelector('#' + symbol).innerText = data.data[num].symbol
 }
 
 // backup helper function to get the complete coin data
