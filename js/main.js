@@ -120,7 +120,10 @@ function getFetch(){
 		.then(res => res.json())
 		.then(data => {
 			console.log(data)
-			
+
+			// need to add a way to loop over the array to pull the info we want.
+			// cosmos keeps changing. any of these can change
+
 			// Bitcoin data
 			coin = "btc"
 			num = 0
