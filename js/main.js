@@ -12,6 +12,7 @@ let columnHigh = "24hr High" // string to delete column
 let columnLow = "24hr Low" // string to delete column
 let table = "crypto" // string for table. used to delete column
 let shibaTrue = true // boolean to adjust number of zeros
+let dogeTrue = true // boolean to adjust number of zeros
 
 // delete table column if api fails to connect
 function deleteColumn(table, column){
@@ -35,7 +36,7 @@ function coinData(data, coin, num, symbol){
 }
 
 // backup helper function to get the complete coin data
-function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, coinVolume, shibaTrue){
+function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, coinVolume, shibaTrue, dogeTrue){
 	
 	// changes the box color base on percent change
 	let p = Number(coinData.percentChange).toFixed(2)
@@ -46,27 +47,33 @@ function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, c
 	}
 
 	// checks to see if currency needs more places beyond decimal
-	if (!shibaTrue) {
-		document.querySelector('#' + coinPrice).innerText = "$" + Number(coinData.last).toFixed(2)
+	if (shibaTrue === true) {
+		document.querySelector('#' + coinPrice).innerText = "$" + Number(coinData.last).toFixed(7)
+	} else if (dogeTrue === true){
+		document.querySelector('#' + coinPrice).innerText = "$" + Number(coinData.last).toFixed(4)
 	} else {
-		document.querySelector('#' + coinPrice).innerText = "$" + Number(coinData.last).toFixed(8)
+		document.querySelector('#' + coinPrice).innerText = "$" + Number(coinData.last).toFixed(2)
 	}
 
 	// adds the percent to the table
 	document.querySelector('#' + coinPercent).innerText = p + "%"
 
 	// checks to see if currency needs more places beyond decimal
-	if (!shibaTrue) {
-		document.querySelector('#' + coinHigh).innerText = "$" + Number(coinData.high24hr).toFixed(2)
-	} else {
+	if (shibaTrue === true) {
 		document.querySelector('#' + coinHigh).innerText = "$" + Number(coinData.high24hr).toFixed(7)
+	} else if (dogeTrue === true){
+		document.querySelector('#' + coinHigh).innerText = "$" + Number(coinData.high24hr).toFixed(4)
+	} else {
+		document.querySelector('#' + coinHigh).innerText = "$" + Number(coinData.high24hr).toFixed(2)
 	}
 
 	// checks to see if currency needs more places beyond decimal
-	if (!shibaTrue) {
-		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.low24hr).toFixed(2)
-	} else {
+	if (shibaTrue === true) {
 		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.low24hr).toFixed(7)
+	} else if (dogeTrue === true){
+		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.low24hr).toFixed(4)
+	} else {
+		document.querySelector('#' + coinLow).innerText = "$" + Number(coinData.low24hr).toFixed(2)
 	}
 	
 	//************************************
@@ -75,7 +82,7 @@ function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, c
 }
 
 // backup helper function to get coin data based on the first api
-function coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue){
+function coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVolume, shibaTrue, dogeTrue){
 	document.querySelector('#' + coin).innerText = data.data[num].name
 	document.querySelector('#' + symbol).innerText = data.data[num].symbol
 
@@ -91,10 +98,12 @@ function coinDataBackup(data, coin, num, symbol, coinPrice, coinPercent, coinVol
 	document.querySelector('#' + coinPercent).innerText = p + "%"
 
 	// checks to see if currency needs more places beyond decimal
-	if (!shibaTrue) {
-		document.querySelector('#' + coinPrice).innerText = "$" + Number(data.data[num].priceUsd).toFixed(2)
-	} else {
+	if (shibaTrue === true) {
 		document.querySelector('#' + coinPrice).innerText = "$" + Number(data.data[num].priceUsd).toFixed(7)
+	} else if (dogeTrue === true){
+		document.querySelector('#' + coinPrice).innerText = "$" + Number(data.data[num].priceUsd).toFixed(4)
+	} else {
+		document.querySelector('#' + coinPrice).innerText = "$" + Number(data.data[num].priceUsd).toFixed(2)
 	}
 
 	//************************************
@@ -111,7 +120,7 @@ function getFetch(){
 		.then(res => res.json())
 		.then(data => {
 			console.log(data)
-
+			
 			// Bitcoin data
 			coin = "btc"
 			num = 0
@@ -132,8 +141,14 @@ function getFetch(){
 
 			// Atom data
 			coin = "atom"
-			num = 25
+			num = 26
 			symbol = "atomSymbol"
+			coinData(data, coin, num, symbol)
+
+			// Doge data
+			coin = "doge"
+			num = 11
+			symbol = "dogeSymbol"
 			coinData(data, coin, num, symbol)
 			
 		})
@@ -156,7 +171,8 @@ function getFetchCoinData(){
 			coinLow = "btcLow"
 			coinVolume = "btcVolume"
 			shibaTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_BTC, coinHigh, coinLow, coinVolume,shibaTrue)
+			dogeTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_BTC, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Ethereum data
 			coinPrice = "ethPrice"
@@ -165,7 +181,8 @@ function getFetchCoinData(){
 			coinLow = "ethLow"
 			coinVolume = "ethVolume"
 			shibaTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_ETH, coinHigh, coinLow, coinVolume,shibaTrue)
+			dogeTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_ETH, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Shiba-Inu data
 			coinPrice = "shibPrice"
@@ -174,7 +191,8 @@ function getFetchCoinData(){
 			coinLow = "shibLow"
 			coinVolume = "shibVolume"
 			shibaTrue = true
-			coinDataComplete(coinPrice, coinPercent, data.USDT_SHIB, coinHigh, coinLow, coinVolume,shibaTrue)
+			dogeTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_SHIB, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Atom data
 			coinPrice = "atomPrice"
@@ -183,7 +201,18 @@ function getFetchCoinData(){
 			coinLow = "atomLow"
 			coinVolume = "atomVolume"
 			shibaTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_ATOM, coinHigh, coinLow, coinVolume,shibaTrue)
+			dogeTrue = false
+			coinDataComplete(coinPrice, coinPercent, data.USDT_ATOM, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
+
+			// Doge data
+			coinPrice = "dogePrice"
+			coinPercent = "dogePercent"
+			coinHigh = "dogeHigh"
+			coinLow = "dogeLow"
+			coinVolume = "dogeVolume"
+			shibaTrue = false
+			dogeTrue = true
+			coinDataComplete(coinPrice, coinPercent, data.USDT_DOGE, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 		})
   	
 		.catch(err => {
@@ -231,7 +260,7 @@ function getFetchBackup(){
 
 			// Atom data
 			coin = "atom"
-			num = 25
+			num = 26
 			symbol = "atomSymbol"
 			coinPrice = "atomPrice"
 			coinPercent = "atomPercent"
