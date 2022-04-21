@@ -18,15 +18,11 @@ let dogeTrue = true // boolean to adjust number of zeros
 function coinArray(data, coin){
 	let num = 0
 	for (let i = 0; i < data.data.length; i++){
-		//console.log(i)
 		if (data.data[i].symbol === coin.toUpperCase()){
 			num = i
 			i = data.data.length + 1
-			//console.log(i)
-			//console.log(num)
 			return num
 		}
-		//console.log(num)
 	}
 }
 
