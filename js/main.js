@@ -46,21 +46,24 @@ function deleteColumn(table, column){
 }
 
 // helper function to get name and symbol
-function coinData(data, coin, num, symbol){
+function coinData(data, coin, num, symbol, coinPercent){
 	document.querySelector('#' + coin).innerText = data.data[num].name
 	document.querySelector('#' + symbol).innerText = data.data[num].symbol
+
+		// changes the box color base on percent change
+		let p = Number(data.data[num].changePercent24Hr).toFixed(2)
+		if (p >= 0) {
+			document.getElementById(coinPercent).style.backgroundColor = "Green"
+		} else {
+			document.getElementById(coinPercent).style.backgroundColor = "Red"
+		}
+	
+		// adds the percent to the table
+		document.querySelector('#' + coinPercent).innerText = p + "%"
 }
 
 // backup helper function to get the complete coin data
-function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, coinVolume, shibaTrue, dogeTrue){
-	
-	// changes the box color base on percent change
-	let p = Number(coinData.percentChange).toFixed(2)
-	if (p >= 0){
-		document.getElementById(coinPercent).style.backgroundColor = "Green"
-	} else {
-		document.getElementById(coinPercent).style.backgroundColor = "Red"
-	}
+function coinDataComplete(coinPrice, coinData, coinHigh, coinLow, coinVolume, shibaTrue, dogeTrue){
 
 	// checks to see if currency needs more places beyond decimal
 	if (shibaTrue === true) {
@@ -70,9 +73,6 @@ function coinDataComplete(coinPrice, coinPercent, coinData, coinHigh, coinLow, c
 	} else {
 		document.querySelector('#' + coinPrice).innerText = "$" + Number(coinData.last).toFixed(2)
 	}
-
-	// adds the percent to the table
-	document.querySelector('#' + coinPercent).innerText = p + "%"
 
 	// checks to see if currency needs more places beyond decimal
 	if (shibaTrue === true) {
@@ -141,31 +141,36 @@ function getFetch(){
 			coin = "btc"
 			num = coinArray(data, coin)
 			symbol = "btcSymbol"
-			coinData(data, coin, num, symbol)
+			coinPercent = "btcPercent"
+			coinData(data, coin, num, symbol, coinPercent)
 
 			// Ethereum data
 			coin = "eth"
 			num = coinArray(data, coin)
 			symbol = "ethSymbol"
-			coinData(data, coin, num, symbol)
+			coinPercent = "ethPercent"
+			coinData(data, coin, num, symbol, coinPercent)
 
 			// Shiba-Inu data
 			coin = "shib"
 			num = coinArray(data, coin)
 			symbol = "shibSymbol"
-			coinData(data, coin, num, symbol)
+			coinPercent = "shibPercent"
+			coinData(data, coin, num, symbol, coinPercent)
 
 			// Atom data
 			coin = "atom"
 			num = coinArray(data, coin)
 			symbol = "atomSymbol"
-			coinData(data, coin, num, symbol)
+			coinPercent = "atomPercent"
+			coinData(data, coin, num, symbol, coinPercent)
 
 			// Doge data
 			coin = "doge"
 			num = coinArray(data, coin)
 			symbol = "dogeSymbol"
-			coinData(data, coin, num, symbol)
+			coinPercent = "dogePercent"
+			coinData(data, coin, num, symbol, coinPercent)
 			
 		})
   	.catch(err => {
@@ -178,7 +183,7 @@ function getFetchCoinData(){
 	fetch("https://poloniex.com/public?command=returnTicker")
 		.then(res => res.json())
 		.then(data => {
-			// console.log(data)
+			console.log(data)
 
 			// Bitcoin data
 			coinPrice = "btcPrice"
@@ -188,7 +193,7 @@ function getFetchCoinData(){
 			coinVolume = "btcVolume"
 			shibaTrue = false
 			dogeTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_BTC, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
+			coinDataComplete(coinPrice, data.USDT_BTC, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Ethereum data
 			coinPrice = "ethPrice"
@@ -198,7 +203,7 @@ function getFetchCoinData(){
 			coinVolume = "ethVolume"
 			shibaTrue = false
 			dogeTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_ETH, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
+			coinDataComplete(coinPrice, data.USDT_ETH, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Shiba-Inu data
 			coinPrice = "shibPrice"
@@ -208,7 +213,7 @@ function getFetchCoinData(){
 			coinVolume = "shibVolume"
 			shibaTrue = true
 			dogeTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_SHIB, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
+			coinDataComplete(coinPrice, data.USDT_SHIB, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Atom data
 			coinPrice = "atomPrice"
@@ -218,7 +223,7 @@ function getFetchCoinData(){
 			coinVolume = "atomVolume"
 			shibaTrue = false
 			dogeTrue = false
-			coinDataComplete(coinPrice, coinPercent, data.USDT_ATOM, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
+			coinDataComplete(coinPrice, data.USDT_ATOM, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 
 			// Doge data
 			coinPrice = "dogePrice"
@@ -228,7 +233,7 @@ function getFetchCoinData(){
 			coinVolume = "dogeVolume"
 			shibaTrue = false
 			dogeTrue = true
-			coinDataComplete(coinPrice, coinPercent, data.USDT_DOGE, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
+			coinDataComplete(coinPrice, data.USDT_DOGE, coinHigh, coinLow, coinVolume,shibaTrue, dogeTrue)
 		})
   	
 		.catch(err => {
